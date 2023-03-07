@@ -1,4 +1,3 @@
-import 'dart:math'; //Import utilisé pour le Random()
 import 'dart:developer' as developer;
 
 import 'package:flutter/material.dart';
@@ -23,10 +22,10 @@ class _BrandQuizScreenState extends State<BrandQuizScreen> {
   int rndIndex = 0;
   //Nombre max des questions de brands.json
   int lengthBrands = 0;
-  int lengthBrands2 = 0;
 
   int index = 0;
-  int index2 = 1;
+
+  int score = 0;
 
   List<int> nombres = [];
 
@@ -34,6 +33,8 @@ class _BrandQuizScreenState extends State<BrandQuizScreen> {
   Future<void> didChangeDependencies() async {
     if (!_isInit) {
       await Provider.of<BrandProvider>(context).fetchAndSetBrands();
+      rndIndex++;
+      nombres.shuffle();
       _isInit = true;
     }
     super.didChangeDependencies();
@@ -42,29 +43,18 @@ class _BrandQuizScreenState extends State<BrandQuizScreen> {
   //Fonction qui envoie la prochaine question
   void next() {
     setState(() {
-      var rng = Random();
-      rndIndex = rng.nextInt(lengthBrands);
-
-      nombres.forEach((element) {
-        if (element != rndIndex) {
-          rndIndex;
-          nombres.add(rndIndex);
-          developer.log('$nombres');
-        } else {
-          developer.log('$nombres');
-        }
-      });
+      rndIndex++;
     });
   }
 
   void endGame() {
     setState(() {
-      if (index > lengthBrands) {
+      if (rndIndex == lengthBrands) {
         Navigator.of(context).pushNamed(EndBrandQuiz.routeName);
         developer.log('EndGame');
+        nombres.shuffle();
       } else {
         index++;
-        index2++;
       }
     });
   }
@@ -73,26 +63,27 @@ class _BrandQuizScreenState extends State<BrandQuizScreen> {
   Widget build(BuildContext context) {
     final brands = Provider.of<BrandProvider>(context).brands;
     lengthBrands = Provider.of<BrandProvider>(context).brands.length;
-    lengthBrands2 = (Provider.of<BrandProvider>(context).brands.length) + 2;
 
-    //Call the Random() function
-    var rnd = Random();
+    for (int i = 0; i < brands.length; i++) {
+      if (i != 0) nombres.add(i);
+    }
+
     //May Random() lenghts par rapport au nb de questions dans brands.js
-    rndIndex = rnd.nextInt(lengthBrands);
     return Scaffold(
       appBar: AppBar(
-        title: Text('$index2 / $lengthBrands2'),
+        centerTitle: true,
+        title: Text('$index / $lengthBrands'),
       ),
       body: Center(
         child: ModelItem(
-          idBrand: brands[rndIndex].idBrand,
-          strBrand: brands[rndIndex].strBrand,
-          linkBrand: brands[rndIndex].linkBrand,
-          choice1: brands[rndIndex].choice1,
-          choice2: brands[rndIndex].choice2,
-          choice3: brands[rndIndex].choice3,
-          choice4: brands[rndIndex].choice4,
-          answer: brands[rndIndex].answer,
+          idBrand: brands[nombres[rndIndex]].idBrand,
+          strBrand: brands[nombres[rndIndex]].strBrand,
+          linkBrand: brands[nombres[rndIndex]].linkBrand,
+          choice1: brands[nombres[rndIndex]].choice1,
+          choice2: brands[nombres[rndIndex]].choice2,
+          choice3: brands[nombres[rndIndex]].choice3,
+          choice4: brands[nombres[rndIndex]].choice4,
+          answer: brands[nombres[rndIndex]].answer,
           nextQuestion: next,
           endGame: endGame,
         ),

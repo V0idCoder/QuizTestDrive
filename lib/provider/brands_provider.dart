@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-
 import '../infrastructure/mock_testdrive_service.dart';
 import '../models/brand.dart';
 
 class BrandProvider with ChangeNotifier {
   final List<Brand> _brands = [];
   int index = 0;
+  int score = 0;
 
   Future<void> fetchAndSetBrands() async {
     _brands.clear();
@@ -21,5 +21,9 @@ class BrandProvider with ChangeNotifier {
 
   List<Brand> get brands {
     return [..._brands];
+  }
+
+  void scoreAdd() {
+    score += 1;
   }
 }

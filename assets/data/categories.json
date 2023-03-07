@@ -11,12 +11,6 @@
             "strCategory": "Model Quiz",
             "linkCategory": "https://c0.wallpaperflare.com/preview/832/465/155/car-light-headlight-glow.jpg",
             "screen": "ModelQuizScreen.routeName"
-        },
-        {
-            "idCategory": "3",
-            "strCategory": "Lights Quiz",
-            "linkCategory": "https://c1.wallpaperflare.com/preview/200/862/475/black-background-audi.jpg",
-            "screen": "BrandQuizScreen.routeName"
         }
     ]
 }

@@ -1,9 +1,11 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
-import 'package:testdrive/screens/home_page.dart';
+import 'package:provider/provider.dart';
 
-import '../screens/brand_quiz.dart';
+import 'dart:developer' as developer;
+
+import '../provider/brands_provider.dart';
 
 class ModelItem extends StatefulWidget {
   const ModelItem({
@@ -41,7 +43,6 @@ class _ModelItemState extends State<ModelItem> {
   bool pressed2 = false;
   bool pressed3 = false;
   bool pressed4 = false;
-  int score = 0;
 
   List<int> nombres = [];
 
@@ -52,11 +53,15 @@ class _ModelItemState extends State<ModelItem> {
     size: 65.0,
   );
 
-  Color trueBackgroundColor = Colors.green;
-  Color falseBackgroundColor = Colors.red;
+  late Color test1 = Colors.black;
+  late Color test2 = Colors.black;
+  late Color test3 = Colors.black;
+  late Color test4 = Colors.black;
 
   @override
   Widget build(BuildContext context) {
+    var score = Provider.of<BrandProvider>(context).scoreAdd();
+
     final ButtonStyle confirmButtonStyle = ElevatedButton.styleFrom(
       // ignore: deprecated_member_use
       onPrimary: Colors.white,
@@ -68,6 +73,23 @@ class _ModelItemState extends State<ModelItem> {
         borderRadius: BorderRadius.all(Radius.circular(30)),
       ),
     );
+
+    // ignore: non_constant_identifier_names
+    Future<void> NextButton() async {
+      // Votre méthode qui doit être exécutée avec attente
+      await Future.delayed(const Duration(seconds: 1));
+      //widget.nextQuestion();
+      test1 = Colors.black;
+      test2 = Colors.black;
+      test3 = Colors.black;
+      test4 = Colors.black;
+      pressed1 = false;
+      pressed2 = false;
+      pressed3 = false;
+      pressed4 = false;
+      widget.endGame();
+      widget.nextQuestion();
+    }
 
     return Center(
       child: (Column(
@@ -102,18 +124,14 @@ class _ModelItemState extends State<ModelItem> {
 
           //Spacer
           const SizedBox(
-            height: 20.0,
+            height: 25.0,
           ),
 
           //ChoiceButton 1
           ElevatedButton(
             style: ElevatedButton.styleFrom(
               onPrimary: Colors.white,
-              backgroundColor: pressed1
-                  ? (widget.answer == widget.choice1
-                      ? trueBackgroundColor
-                      : falseBackgroundColor)
-                  : Colors.black,
+              primary: test1,
               minimumSize: const Size(290, 64),
               padding: const EdgeInsets.symmetric(horizontal: 16),
               shape: const RoundedRectangleBorder(
@@ -128,10 +146,13 @@ class _ModelItemState extends State<ModelItem> {
               setState(() {
                 if (widget.choice1 == widget.answer) {
                   pressed1 = !pressed1;
-                  score++;
+                  test1 = Colors.green;
+                  score;
+                  NextButton();
                 } else {
                   pressed1 = pressed1;
-                  score--;
+                  test1 = Colors.red;
+                  NextButton();
                 }
               });
             },
@@ -139,14 +160,14 @@ class _ModelItemState extends State<ModelItem> {
 
           //Spacer
           const SizedBox(
-            height: 20.0,
+            height: 25.0,
           ),
 
           //ChoiceButton 2
           ElevatedButton(
             style: ElevatedButton.styleFrom(
               onPrimary: Colors.white,
-              backgroundColor: pressed2 ? Colors.green : Colors.black,
+              primary: test2,
               minimumSize: Size(290, 64),
               padding: const EdgeInsets.symmetric(horizontal: 16),
               shape: const RoundedRectangleBorder(
@@ -162,12 +183,13 @@ class _ModelItemState extends State<ModelItem> {
                 () {
                   if (widget.choice2 == widget.answer) {
                     pressed2 = !pressed2;
-                    score++;
+                    test2 = Colors.green;
+                    score;
+                    NextButton();
                   } else {
                     pressed2 = pressed2;
-                    if (score != 0) {
-                      score--;
-                    }
+                    test2 = Colors.red;
+                    NextButton();
                   }
                 },
               );
@@ -176,14 +198,14 @@ class _ModelItemState extends State<ModelItem> {
 
           //Spacer
           const SizedBox(
-            height: 20.0,
+            height: 25.0,
           ),
 
           //ChoiceButton 3
           ElevatedButton(
             style: ElevatedButton.styleFrom(
               onPrimary: Colors.white,
-              backgroundColor: pressed3 ? Colors.green : Colors.black,
+              primary: test3,
               minimumSize: Size(290, 64),
               padding: const EdgeInsets.symmetric(horizontal: 16),
               shape: const RoundedRectangleBorder(
@@ -199,12 +221,15 @@ class _ModelItemState extends State<ModelItem> {
                 () {
                   if (widget.choice3 == widget.answer) {
                     pressed3 = !pressed3;
-                    score++;
+                    test3 = Colors.green;
+                    score;
+                    NextButton();
                   } else {
                     pressed3 = pressed3;
-                    if (score != 0) {
-                      score--;
-                    }
+
+                    test3 = Colors.red;
+
+                    NextButton();
                   }
                 },
               );
@@ -213,7 +238,7 @@ class _ModelItemState extends State<ModelItem> {
 
           //Spacer
           const SizedBox(
-            height: 20.0,
+            height: 25.0,
           ),
 
           //ChoiceButton 4
@@ -221,7 +246,7 @@ class _ModelItemState extends State<ModelItem> {
             style: ElevatedButton.styleFrom(
               // ignore: deprecated_member_use
               onPrimary: Colors.white,
-              backgroundColor: pressed4 ? Colors.green : Colors.black,
+              primary: test4,
               minimumSize: const Size(290, 64),
               padding: const EdgeInsets.symmetric(horizontal: 16),
               shape: const RoundedRectangleBorder(
@@ -237,38 +262,40 @@ class _ModelItemState extends State<ModelItem> {
                 () {
                   if (widget.choice4 == widget.answer) {
                     pressed4 = !pressed4;
-                    score++;
+                    test4 = Colors.green;
+                    score;
+                    NextButton();
                   } else {
                     pressed4 = pressed4;
-                    if (score != 0) {
-                      score--;
-                    }
+
+                    test4 = Colors.red;
+
+                    NextButton();
                   }
                 },
               );
             },
           ),
 
-          //Spacer
-          const SizedBox(
-            height: 50.0,
-          ),
+          // //NextButton -> Show the next question
+          // ElevatedButton(
+          //   style: confirmButtonStyle,
+          //   child: icon, //Text('$score'), //icon,
 
-          //NextButton -> Show the next question
-          ElevatedButton(
-            style: confirmButtonStyle,
-            child: icon, //Text('$score'), //icon,
-
-            onPressed: () {
-              //Call the function next dans brand_quiz.dart pour passer à la question suivante
-              pressed1 = false;
-              pressed2 = false;
-              pressed3 = false;
-              pressed4 = false;
-              widget.nextQuestion();
-              widget.endGame();
-            },
-          ),
+          //   onPressed: () {
+          //     //Call the function next dans brand_quiz.dart pour passer à la question suivante
+          //     test1 = Colors.black;
+          //     test2 = Colors.black;
+          //     test3 = Colors.black;
+          //     test4 = Colors.black;
+          //     pressed1 = false;
+          //     pressed2 = false;
+          //     pressed3 = false;
+          //     pressed4 = false;
+          //     widget.endGame();
+          //     widget.nextQuestion();
+          //   },
+          // ),
         ],
       )),
     );

@@ -19,44 +19,63 @@ class CategoryItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(30.0),
-          child: SizedBox(
-            width: 360.0,
-            height: 240.0,
-            child: Stack(
-              children: [
-                SizedBox(
-                  width: 360.0,
-                  height: 240.0,
-                  child: Card(
-                    elevation: 2,
-                    //margin: const EdgeInsets.(top: 10.0),
-                    child: Image.network(
-                      linkCategory,
-                      fit: BoxFit.fill,
+    return Center(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(30.0),
+            child: SizedBox(
+              width: 360.0,
+              height: 240.0,
+              child: Stack(
+                children: [
+                  SizedBox(
+                    width: 360.0,
+                    height: 240.0,
+                    child: Card(
+                      elevation: 2,
+                      //margin: const EdgeInsets.(top: 10.0),
+                      child: Image.network(
+                        linkCategory,
+                        fit: BoxFit.fill,
+                      ),
                     ),
                   ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    // ignore: unrelated_type_equality_checks
-                    if (idCategory == "1") {
-                      Navigator.of(context).pushNamed(BrandQuizScreen.routeName,
-                          arguments: idCategory);
-                    } else {
-                      Navigator.of(context).pushNamed(ModelQuizScreen.routeName,
-                          arguments: idCategory);
-                    }
-                  },
-                ),
-              ],
+                  GestureDetector(
+                    onTap: () {
+                      // ignore: unrelated_type_equality_checks
+                      if (idCategory == "1") {
+                        Navigator.of(context).pushNamed(
+                            BrandQuizScreen.routeName,
+                            arguments: idCategory);
+                      } else {
+                        Navigator.of(context).pushNamed(
+                            ModelQuizScreen.routeName,
+                            arguments: idCategory);
+                      }
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-      ],
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const SizedBox(
+                height: 40.0,
+              ),
+              Text(
+                strCategory,
+                style: TextStyle(fontSize: 20),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

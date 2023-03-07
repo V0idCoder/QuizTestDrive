@@ -37,6 +37,7 @@ class TestDrive extends StatelessWidget {
         //theme: theme,
         routes: {
           '/': (context) => const HomePage(),
+          HomePage.routeName: (context) => const HomePage(),
           BrandQuizScreen.routeName: (context) => const BrandQuizScreen(),
           EndBrandQuiz.routeName: (context) => const EndBrandQuiz(),
           ModelQuizScreen.routeName: (context) => const ModelQuizScreen(),

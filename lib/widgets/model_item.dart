@@ -91,7 +91,7 @@ class _ModelItemState extends State<ModelItem> {
               decoration: const InputDecoration(
                 fillColor: Colors.white,
                 border: OutlineInputBorder(),
-                labelText: 'Type the model\'s name here...',
+                labelText: 'Entrez le nom du model ici...',
               ),
               validator: ((userAnswer) {
                 if (userAnswer != widget.strModel) {

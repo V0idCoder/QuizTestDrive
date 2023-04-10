@@ -6,7 +6,7 @@ class Category {
 
   Category(
     this.idCategory,
-    this.strCategory,
+    required this.strCategory,
     this.linkCategory,
     this.screen,
   );

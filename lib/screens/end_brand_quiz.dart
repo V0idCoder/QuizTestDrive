@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:testdrive/screens/brand_quiz.dart';
 import 'package:testdrive/screens/home_page.dart';
 
-//import 'package:percent_indicator/percent_indicator.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 
 import '../provider/brands_provider.dart';
 
